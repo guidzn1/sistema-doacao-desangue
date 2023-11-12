@@ -20,7 +20,7 @@ class TelaConsulta:
             host="127.0.0.1",
             user="root",
             password="12345678",
-            database="doacaosangue2"
+            database="doacaosangue4"
         )
         self.cursor = self.conexao.cursor()
 
