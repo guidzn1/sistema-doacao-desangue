@@ -28,7 +28,7 @@ class TelaLogin:
             host="127.0.0.1",
             user="root",
             password="12345678",
-            database="doacaosangue"
+            database="doacaosangue2"
         )
         self.cursor = self.conexao.cursor()
 
@@ -63,6 +63,7 @@ class TelaLogin:
         
         if username == "agendamento" and password == "123":
             self.abrir_tela_cadastro()
+            self.root.withdraw()  # Esconder a janela de login
         else:
             messagebox.showerror("Erro de Login", "Credenciais de agendamento inválidas")
 
@@ -113,7 +114,6 @@ class TelaLogin:
 
         btn_consultar = tk.Button(janela_cadastro, text="Consultar", command=self.abrir_tela_consulta)
         btn_consultar.pack()
-        
 
     def cadastrar_doador(self, entry_cpf, nome, data_nascimento, genero, endereco, contato, tipo_sanguineo):
         try:

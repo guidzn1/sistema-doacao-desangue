@@ -15,12 +15,12 @@ class TelaConsulta:
         self.lista_doadores = tk.Listbox(root, width=50)
         self.lista_doadores.pack()
 
-        # Conecte-se ao banco de dados MySQL
+        # Conecção ao banco de dados MySQL
         self.conexao = pymysql.connect(
             host="127.0.0.1",
             user="root",
             password="12345678",
-            database="doacaosangue"
+            database="doacaosangue2"
         )
         self.cursor = self.conexao.cursor()
 
@@ -36,7 +36,7 @@ class TelaConsulta:
         if doadores:
             for doador in doadores:
                 nome, endereco, contato = doador
-                info = f"Nome: {nome} - Endereço: {endereco} - Contato: {contato}"
+                info = f"Nome: {nome} | Endereço: {endereco} | Contato: {contato}"
                 self.lista_doadores.insert(tk.END, info)
         else:
             self.lista_doadores.insert(tk.END, "Nenhum doador encontrado com esse tipo sanguíneo.")
