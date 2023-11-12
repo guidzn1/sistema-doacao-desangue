@@ -5,6 +5,7 @@ from datetime import datetime
 from tkinter import ttk
 from PIL import Image, ImageTk
 from consulta import TelaConsulta
+from agendamento import Agendamento
 
 class TelaLogin:
     def __init__(self, root, sistema):
@@ -58,14 +59,14 @@ class TelaLogin:
             messagebox.showerror("Erro de Login", "Credenciais de funcionário inválidas")
 
     def login_agendamento(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
-        
-        if username == "agendamento" and password == "123":
-            self.abrir_tela_cadastro()
-            self.root.withdraw()  # Esconder a janela de login
-        else:
-            messagebox.showerror("Erro de Login", "Credenciais de agendamento inválidas")
+        self.abrir_tela_agendamento()
+        self.root.withdraw()  # Esconder a janela de login
+
+    def abrir_tela_agendamento(self):
+        root_agendamento = tk.Toplevel(self.root)
+        app_agendamento = Agendamento(root_agendamento)
+
+
 
     def abrir_tela_cadastro(self):
         janela_cadastro = tk.Toplevel(self.root)
