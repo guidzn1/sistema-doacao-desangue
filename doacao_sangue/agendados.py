@@ -3,9 +3,10 @@ from tkinter import ttk
 import pymysql
 
 class Agendados:
-    def __init__(self, root):
+    def __init__(self, root, tela_cadastro):
         self.root = root
         self.root.title("Agendamentos Registrados")
+        self.tela_cadastro = tela_cadastro  # Adiciona a referência à tela de cadastro
 
         self.tree = ttk.Treeview(root, columns=("Tipo Sanguíneo", "Data", "Horário", "Nome", "CPF"), show="headings")
         self.tree.heading("Tipo Sanguíneo", text="Tipo Sanguíneo")
@@ -27,8 +28,12 @@ class Agendados:
 
         self.cpf_entry = tk.Entry(root)
         self.cpf_entry.pack()
+
         retirar_button = tk.Button(root, text="Retirar", command=self.retirar_pessoa)
         retirar_button.pack()
+
+        voltar_button = tk.Button(root, text="Voltar", command=self.voltar_tela_cadastro)
+        voltar_button.pack()
 
     def exibir_agendamentos(self):
         registros = self.tree.get_children()
@@ -52,3 +57,6 @@ class Agendados:
         except Exception as e:
             print(f"Erro ao retirar pessoa dos agendados: {str(e)}")
 
+    def voltar_tela_cadastro(self):
+        self.tela_cadastro.deiconify()  # Reexibe a tela de cadastro
+        self.root.destroy()  # Fecha a tela de agendados

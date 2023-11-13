@@ -1,26 +1,23 @@
 import tkinter as tk
 from tkinter import ttk
+from tkcalendar import DateEntry  # Importe o widget de calendário
 from datetime import date
 import pymysql
 
 class Agendamento:
-    def __init__(self, root):
+    def __init__(self, root, tela_anterior):
         self.root = root
         self.root.title("Agendamento de Doação")
+        self.tela_anterior = tela_anterior  # Adicione a referência à tela anterior
 
-        # Interface para agendamento
         tk.Label(root, text="Tipo Sanguíneo:").pack()
         tipos_sanguineos = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Não sei"]
         combo_tipo_sanguineo = ttk.Combobox(root, values=tipos_sanguineos)
         combo_tipo_sanguineo.pack()
 
-        tk.Label(root, text="Data (dd-mm-yyyy):").pack()
-        entry_data = tk.Entry(root)
+        tk.Label(root, text="Data:").pack()
+        entry_data = DateEntry(root, date_pattern="dd-mm-yyyy", locale="pt_BR")
         entry_data.pack()
-
-        # Define a data atual no campo de data
-        data_atual = date.today().strftime("%d-%m-%Y")  # Obtém a data no formato dd-mm-yyyy
-        entry_data.insert(0, data_atual)  # Insere a data no Entry da interface
 
         tk.Label(root, text="Horário:").pack()
         entry_horario = tk.Entry(root)
@@ -43,21 +40,21 @@ class Agendamento:
         ))
         btn_agendar.pack()
 
+        btn_voltar = tk.Button(root, text="Voltar", command=self.voltar_tela_anterior)
+        btn_voltar.pack()
+
         # Conectando ao banco de dados
         self.conexao = pymysql.connect(
             host="127.0.0.1",
             user="root",
             password="12345678",
-            database="doacaosangue4"  # Nome do seu banco de dados
+            database="doacaosangue4"
         )
         self.cursor = self.conexao.cursor()
 
     def agendar_doacao(self, tipo_sanguineo, data, horario, nome, cpf):
         try:
-            # Converter a data para o formato aceitável pelo banco de dados (yyyy-mm-dd)
             data_formatada = self.converter_data_formato(data)
-            
-            # Inserir dados na tabela 'agendamento'
             sql = "INSERT INTO agendamento (tipo_sanguineo, data, horario, nome, cpf) VALUES (%s, %s, %s, %s, %s)"
             values = (tipo_sanguineo, data_formatada, horario, nome, cpf)
             self.cursor.execute(sql, values)
@@ -65,9 +62,12 @@ class Agendamento:
             print("Doação agendada com sucesso!")
         except Exception as e:
             print(f"Erro ao agendar doação: {str(e)}")
-            
+
     def converter_data_formato(self, data):
-        # Converte a data do formato dd-mm-yyyy para yyyy-mm-dd
-        partes_data = data.split("/")
+        partes_data = data.split("-")
         data_formatada = f"{partes_data[2]}-{partes_data[1]}-{partes_data[0]}"
         return data_formatada
+
+    def voltar_tela_anterior(self):
+        self.tela_anterior.deiconify()
+        self.root.destroy()

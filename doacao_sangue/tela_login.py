@@ -66,12 +66,13 @@ class TelaLogin:
 
     def abrir_tela_agendamento(self):
         root_agendamento = tk.Toplevel(self.root)
-        app_agendamento = Agendamento(root_agendamento)
+        app_agendamento = Agendamento(root_agendamento, self.root)  # Passar a referência da tela atual
+
     
     def abrir_tela_agendados(self):
         root_agendados = tk.Toplevel(self.root)
-        app_agendados = Agendados(root_agendados)
-
+        app_agendados = Agendados(root_agendados, self.root)  # Passe a referência da tela atual
+        self.root.withdraw()
 
 
     def abrir_tela_cadastro(self):
