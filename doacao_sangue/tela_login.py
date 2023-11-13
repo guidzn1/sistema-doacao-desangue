@@ -7,6 +7,8 @@ from PIL import Image, ImageTk
 from consulta import TelaConsulta
 from agendamento import Agendamento
 from agendados import Agendados
+from relatorios import Relatorios
+from atualiza import AtualizaDados
 
 
 class TelaLogin:
@@ -126,6 +128,13 @@ class TelaLogin:
         btn_agendados = tk.Button(janela_cadastro, text="Agendados", command=self.abrir_tela_agendados)
         btn_agendados.pack()
 
+        btn_relatorios = tk.Button(janela_cadastro, text="Relatórios", command=self.abrir_tela_relatorios)
+        btn_relatorios.pack()
+
+        btn_atualiza = tk.Button(janela_cadastro, text="Atualizar Cadastro", command=self.abrir_tela_atualiza)
+        btn_atualiza.pack()
+
+
     def cadastrar_doador(self, entry_cpf, nome, data_nascimento, genero, endereco, contato, tipo_sanguineo):
         try:
             if data_nascimento:
@@ -147,4 +156,14 @@ class TelaLogin:
         app_consulta = TelaConsulta(root_consulta)  # Crie a instância da tela de consulta
         # Você também pode chamar métodos específicos ou adicionar lógica à tela de consulta se necessário
         self.root.withdraw()  # Esconder a janela de login
+
+    def abrir_tela_relatorios(self):
+        root_relatorios = tk.Toplevel(self.root)
+        app_relatorios = Relatorios(root_relatorios, self.root)  # Abre a tela de relatórios
+        self.root.withdraw()  # Esconde a janela de login
+
+    def abrir_tela_atualiza(self):
+        root_atualiza = tk.Toplevel(self.root)
+        app_atualiza = AtualizaDados(root_atualiza)  # Cria a instância para atualizar dados
+        self.root.withdraw()  
 
