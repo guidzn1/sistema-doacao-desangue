@@ -6,6 +6,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from consulta import TelaConsulta
 from agendamento import Agendamento
+from agendados import Agendados
+
 
 class TelaLogin:
     def __init__(self, root, sistema):
@@ -65,6 +67,10 @@ class TelaLogin:
     def abrir_tela_agendamento(self):
         root_agendamento = tk.Toplevel(self.root)
         app_agendamento = Agendamento(root_agendamento)
+    
+    def abrir_tela_agendados(self):
+        root_agendados = tk.Toplevel(self.root)
+        app_agendados = Agendados(root_agendados)
 
 
 
@@ -115,6 +121,9 @@ class TelaLogin:
 
         btn_consultar = tk.Button(janela_cadastro, text="Consultar", command=self.abrir_tela_consulta)
         btn_consultar.pack()
+
+        btn_agendados = tk.Button(janela_cadastro, text="Agendados", command=self.abrir_tela_agendados)
+        btn_agendados.pack()
 
     def cadastrar_doador(self, entry_cpf, nome, data_nascimento, genero, endereco, contato, tipo_sanguineo):
         try:
